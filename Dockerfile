@@ -1,5 +1,4 @@
-FROM python:3.11-bullseye
-MAINTAINER mist.io <support@mist.io>
+FROM python:3.13-bullseye
 
 RUN set -x && \
     apt-get update -yq && \
@@ -40,7 +39,7 @@ RUN git clone https://github.com/tmux/tmux.git && cd tmux && sh autogen.sh && ./
 RUN pip install git+https://github.com/mverteuil/pytest-ipdb.git#egg=pytest-ipdb
 
 COPY container/requirements.txt /mist.tests/requirements.txt
-RUN pip install --no-cache-dir -r /mist.tests/requirements.txt
+RUN pip install --no-cache-dir -r /mist.tests/requirements.txt --config-setting editable_mode=compat
 
 COPY . /mist.tests/
 WORKDIR /mist.tests/
